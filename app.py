@@ -75,7 +75,7 @@ def analyze_text(text):
 custom_css = """
 <style>
 .stApp {
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0QJce7Y5aqHz8Se2WjlBnqClnluoKHZ9jCg&s');
+    background-image: url('https://i.pinimg.com/564x/55/4e/b8/554eb857da2b9626cf8556c6c8746f01.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
