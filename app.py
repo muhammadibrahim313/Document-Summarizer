@@ -49,44 +49,60 @@ def summarize_document(file):
 
     return summary, audio_file.name
 
-# Enhanced CSS for more user-friendly, thematic design
+# Enhanced CSS for both dark and light modes with modern design
 custom_css = """
 <style>
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #FFFFFF;
-    background: linear-gradient(135deg, #1D2671, #C33764);
-    background-attachment: fixed;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root {
+    --background: #f5f5f5;
+    --text-color: #333;
+    --primary-color: #6200ea;
+    --secondary-color: #03dac6;
+    --highlight-color: #bb86fc;
+    --button-bg: #6200ea;
+    --button-hover-bg: #3700b3;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #121212;
+        --text-color: #e0e0e0;
+        --primary-color: #bb86fc;
+        --secondary-color: #03dac6;
+        --highlight-color: #3700b3;
+        --button-bg: #bb86fc;
+        --button-hover-bg: #3700b3;
+    }
 }
 
 h1, h2, h3 {
-    color: #FAF3F3;
-    text-shadow: 1px 1px 3px #000000;
+    color: var(--primary-color);
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1.5rem;
 }
 
 .stButton>button {
-    background-color: #C33764;
-    color: #FFFFFF;
+    background-color: var(--button-bg);
+    color: #ffffff;
     font-size: 18px;
     padding: 12px 24px;
     border-radius: 8px;
     border: none;
-    box-shadow: 0px 5px 10px rgba(195, 55, 100, 0.5);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .stButton>button:hover {
-    background-color: #6A0572;
-    transform: translateY(-2px);
-}
-
-.stButton>button:active {
-    background-color: #3D3C4E;
-    transform: translateY(1px);
-    box-shadow: 0px 3px 8px rgba(58, 58, 72, 0.7);
+    background-color: var(--button-hover-bg);
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .upload-btn-wrapper {
@@ -94,14 +110,18 @@ h1, h2, h3 {
     overflow: hidden;
     display: inline-block;
     border-radius: 12px;
-    background: linear-gradient(135deg, #1D2671, #C33764);
+    background: var(--primary-color);
+    color: #fff;
     padding: 10px 20px;
-    box-shadow: 0px 5px 15px rgba(29, 38, 113, 0.5);
-    transition: transform 0.3s ease;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .upload-btn-wrapper:hover {
+    background: var(--highlight-color);
     transform: translateY(-3px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .upload-btn-wrapper input[type=file] {
@@ -114,12 +134,17 @@ h1, h2, h3 {
 }
 
 .gradient-bg {
-    background: linear-gradient(135deg, #1D2671, #6A0572);
+    background: var(--secondary-color);
+    color: var(--text-color);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0px 5px 15px rgba(106, 5, 114, 0.3);
-    color: #FAF3F3;
-    font-size: 16px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gradient-bg:hover {
+    background: var(--highlight-color);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .footer {
@@ -127,12 +152,13 @@ h1, h2, h3 {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #1D2671;
-    color: #FAF3F3;
+    background-color: var(--primary-color);
+    color: #fff;
     text-align: center;
     padding: 15px 0;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.5);
     font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
 .footer p {
@@ -141,13 +167,14 @@ h1, h2, h3 {
 }
 
 .footer a {
-    color: #C33764;
+    color: var(--secondary-color);
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 .footer a:hover {
-    color: #FAF3F3;
+    color: var(--highlight-color);
     text-decoration: underline;
 }
 
@@ -170,7 +197,7 @@ h1, h2, h3 {
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Header with title
-st.title("✨ Document Summarizer 3D UI ✨")
+st.title("✨ Document Summarizer UI ✨")
 st.subheader("Upload a Word or PDF document and get an AI-generated summary with audio playback.")
 
 # File uploader with enhanced styling
