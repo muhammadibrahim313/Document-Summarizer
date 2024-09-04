@@ -9,12 +9,8 @@ import whisper
 from streamlit.components.v1 import html
 
 # Load Groq API key from environment variable
-groq_api_key = os.getenv('GROQ_API_KEY')
-if not groq_api_key:
-    st.error("GROQ_API_KEY environment variable is not set.")
-    st.stop()
-
-groq_client = Groq(api_key=groq_api_key)
+api_key = st.secrets["GROQ_API_KEY"]
+client = Groq(api_key=api_key)
 
 # Load Whisper model
 model = whisper.load_model("base")
