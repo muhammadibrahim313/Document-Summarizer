@@ -1,4 +1,4 @@
-flask
+streamlit
 groq
 PyPDF2
 python-docx
