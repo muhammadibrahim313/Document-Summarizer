@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Document Summarizer</h1>
+    </header>
+    <main>
+        <form action="{{ url_for('index') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="document" required>
+            <select name="model_selection">
+                <option value="llama3-8b-8192">LLaMA 3.8B-8192</option>
+                <!-- Add more model options as needed -->
+            </select>
+            <button type="submit">Summarize</button>
+        </form>
+        {% if summary %}
+        <div class="summary">
+            <h2>Summary (using {{ model_selection }})</h2>
+            <p>{{ summary }}</p>
+        </div>
+        <div class="audio">
+            <h2>Audio Summary</h2>
+            <audio controls>
+                <source src="{{ audio_file }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        {% endif %}
+    </main>
+    <footer>
+        <p>&copy; 2023 Document Summarizer</p>
+        <div class="social-links">
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+</body>
+</html>

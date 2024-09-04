@@ -1,0 +1,6 @@
+flask
+groq
+PyPDF2
+python-docx
+gtts
+openai-whisper
