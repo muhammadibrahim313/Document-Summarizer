@@ -18,11 +18,9 @@ model = whisper.load_model("base")
 def summarize_document(file):
     # Read file content
     if file.name.endswith('.pdf'):
-        # Read PDF file
         reader = PdfReader(file)
         text = ''.join([page.extract_text() for page in reader.pages])
     elif file.name.endswith('.docx'):
-        # Read DOCX file
         doc = Document(file)
         text = ''.join([para.text for para in doc.paragraphs])
     else:
@@ -30,7 +28,7 @@ def summarize_document(file):
 
     # Generate summary
     try:
-        chat_completion = groq_client.chat.completions.create(
+        chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "user", "content": f"Please summarize the following text: {text}"}
             ],
@@ -51,39 +49,55 @@ def summarize_document(file):
 
     return summary, audio_file.name
 
-# Custom CSS for styling
+# Enhanced CSS for 3D-like UI and modern styling
 custom_css = """
 <style>
 body {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: 'Arial', sans-serif;
     color: #FFFFFF;
-    background: linear-gradient(135deg, #6d5dfc, #3dd5f3);
+    background: linear-gradient(135deg, #222831, #393E46);
     background-attachment: fixed;
+    overflow-x: hidden;
 }
 
 h1, h2, h3 {
-    color: #FFFFFF;
-    text-shadow: 2px 2px #3dd5f3;
+    color: #EEEEEE;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .stButton>button {
-    background-color: #3dd5f3;
-    color: white;
+    background-color: #00ADB5;
+    color: #FFFFFF;
     font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 12px 24px;
+    border-radius: 12px;
     border: none;
-    transition: background-color 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 173, 181, 0.4);
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .stButton>button:hover {
-    background-color: #6d5dfc;
+    background-color: #00A5B5;
+    transform: translateY(-3px);
+}
+
+.stButton>button:active {
+    background-color: #009FA5;
+    transform: translateY(1px);
+    box-shadow: 0px 3px 12px rgba(0, 173, 181, 0.7);
 }
 
 .upload-btn-wrapper {
     position: relative;
     overflow: hidden;
     display: inline-block;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 173, 181, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.upload-btn-wrapper:hover {
+    transform: translateY(-3px);
 }
 
 .upload-btn-wrapper input[type=file] {
@@ -95,48 +109,34 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
+.gradient-bg {
+    background: linear-gradient(135deg, #00ADB5, #393E46);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 5px 20px rgba(0, 173, 181, 0.3);
+    color: #EEEEEE;
+    font-size: 16px;
+}
+
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #3dd5f3;
-    color: white;
+    background-color: #222831;
+    color: #00ADB5;
     text-align: center;
-    padding: 10px;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #6d5dfc, #3dd5f3);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.dark-mode body {
-    background: linear-gradient(135deg, #2c2c54, #24243e);
-}
-
-.dark-mode h1, .dark-mode h2, .dark-mode h3 {
-    color: #e3e3e3;
-}
-
-.dark-mode .stButton>button {
-    background-color: #24243e;
-    color: #FFFFFF;
-}
-
-.dark-mode .footer {
-    background-color: #2c2c54;
-    color: #e3e3e3;
+    padding: 15px 0;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 768px) {
     h1 {
-        font-size: 24px;
+        font-size: 28px;
     }
     .stButton>button {
         font-size: 16px;
-        padding: 8px 16px;
+        padding: 10px 20px;
     }
 }
 </style>
@@ -146,10 +146,10 @@ h1, h2, h3 {
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Header with title
-st.title("🌟 Document Summarizer 🌟")
+st.title("✨ Document Summarizer 3D UI ✨")
 st.subheader("Upload a Word or PDF document and get an AI-generated summary with audio playback.")
 
-# File uploader
+# File uploader with enhanced styling
 uploaded_file = st.file_uploader("Upload a Word or PDF Document", type=['pdf', 'docx'], help="Supports .pdf and .docx files")
 
 if uploaded_file is not None:
@@ -164,7 +164,7 @@ if uploaded_file is not None:
     else:
         st.error(summary)  # Display error message
 
-# Footer
+# Footer with a modern touch
 html("""
 <div class="footer">
     <p>Developed with 💙 by Your Name</p>
