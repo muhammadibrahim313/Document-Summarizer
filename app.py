@@ -6,7 +6,7 @@ from docx import Document
 from gtts import gTTS
 import tempfile
 import whisper
-from streamlit.components.v1 import html
+import pyperclip  # For clipboard operations
 
 # Load Groq API key from environment variable
 api_key = st.secrets["GROQ_API_KEY"]
@@ -163,11 +163,23 @@ h1, h2, h3 {
     padding: 20px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 
-.gradient-bg:hover {
-    background: var(--highlight-color);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+.gradient-bg button.copy-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.gradient-bg button.copy-btn:hover {
+    background-color: var(--highlight-color);
 }
 
 .footer {
@@ -220,7 +232,7 @@ h1, h2, h3 {
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Header with title and links
-st.title("✨ Document Summarizer & Audio Generator ✨")
+st.title("✨ Document & Audio Processor UI ✨")
 st.markdown("#### Powered by AI | [GitHub](https://github.com/muhammadibrahim313) | [LinkedIn](https://www.linkedin.com/in/muhammad-ibrahim-qasmi-9876a1297/)")
 
 # File uploader with enhanced styling
@@ -238,25 +250,27 @@ if uploaded_file is not None:
         
         if summary and audio_file_path:
             st.subheader("🔍 Summary")
-            st.markdown(f"<div class='gradient-bg'>{summary}</div>", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class='gradient-bg'>
+                {summary}
+                <button class='copy-btn' onclick="navigator.clipboard.writeText('{summary}')">Copy</button>
+            </div>""", unsafe_allow_html=True)
             
             st.subheader("🎧 Audio Summary")
             st.audio(audio_file_path)
         else:
             st.error(summary)  # Display error message
 
-    # Analyze text input
-    st.subheader("📄 Analyze Text")
-    input_text = st.text_area("Enter text for analysis", height=150)
-    if st.button("Analyze Text"):
-        if input_text:
-            analysis_result = analyze_text(input_text)
-            st.markdown(f"<div class='gradient-bg'>{analysis_result}</div>", unsafe_allow_html=True)
+    # Analyze the content of the file (regardless of type)
+    analysis = analyze_text(summary if summary else transcription)
+    st.subheader("🧠 Text Analysis")
+    st.markdown(f"<div class='gradient-bg'>{analysis}</div>", unsafe_allow_html=True)
 
-# Footer section
+# Footer with links
 st.markdown("""
 <div class="footer">
     <p>&copy; 2024 Document Summarizer | All Rights Reserved</p>
     <p>Connect with us: <a href="https://github.com/muhammadibrahim313" target="_blank">GitHub</a> | <a href="https://www.linkedin.com/in/muhammad-ibrahim-qasmi-9876a1297/" target="_blank">LinkedIn</a></p>
 </div>
 """, unsafe_allow_html=True)
+
