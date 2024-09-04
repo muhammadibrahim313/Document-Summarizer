@@ -49,42 +49,44 @@ def summarize_document(file):
 
     return summary, audio_file.name
 
-# Enhanced CSS for 3D-like UI and modern styling
+# Enhanced CSS for more user-friendly, thematic design
 custom_css = """
 <style>
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #FFFFFF;
-    background: linear-gradient(135deg, #222831, #393E46);
+    background: linear-gradient(135deg, #1D2671, #C33764);
     background-attachment: fixed;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 h1, h2, h3 {
-    color: #EEEEEE;
-    text-shadow: 2px 2px 4px #000000;
+    color: #FAF3F3;
+    text-shadow: 1px 1px 3px #000000;
 }
 
 .stButton>button {
-    background-color: #00ADB5;
+    background-color: #C33764;
     color: #FFFFFF;
     font-size: 18px;
     padding: 12px 24px;
-    border-radius: 12px;
+    border-radius: 8px;
     border: none;
-    box-shadow: 0px 5px 15px rgba(0, 173, 181, 0.4);
+    box-shadow: 0px 5px 10px rgba(195, 55, 100, 0.5);
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .stButton>button:hover {
-    background-color: #00A5B5;
-    transform: translateY(-3px);
+    background-color: #6A0572;
+    transform: translateY(-2px);
 }
 
 .stButton>button:active {
-    background-color: #009FA5;
+    background-color: #3D3C4E;
     transform: translateY(1px);
-    box-shadow: 0px 3px 12px rgba(0, 173, 181, 0.7);
+    box-shadow: 0px 3px 8px rgba(58, 58, 72, 0.7);
 }
 
 .upload-btn-wrapper {
@@ -92,7 +94,9 @@ h1, h2, h3 {
     overflow: hidden;
     display: inline-block;
     border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 173, 181, 0.4);
+    background: linear-gradient(135deg, #1D2671, #C33764);
+    padding: 10px 20px;
+    box-shadow: 0px 5px 15px rgba(29, 38, 113, 0.5);
     transition: transform 0.3s ease;
 }
 
@@ -110,11 +114,11 @@ h1, h2, h3 {
 }
 
 .gradient-bg {
-    background: linear-gradient(135deg, #00ADB5, #393E46);
+    background: linear-gradient(135deg, #1D2671, #6A0572);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0px 5px 20px rgba(0, 173, 181, 0.3);
-    color: #EEEEEE;
+    box-shadow: 0px 5px 15px rgba(106, 5, 114, 0.3);
+    color: #FAF3F3;
     font-size: 16px;
 }
 
@@ -123,20 +127,40 @@ h1, h2, h3 {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #222831;
-    color: #00ADB5;
+    background-color: #1D2671;
+    color: #FAF3F3;
     text-align: center;
     padding: 15px 0;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.5);
+    font-size: 14px;
+}
+
+.footer p {
+    margin: 0;
+    padding: 0;
+}
+
+.footer a {
+    color: #C33764;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    color: #FAF3F3;
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
     h1 {
-        font-size: 28px;
+        font-size: 26px;
     }
     .stButton>button {
         font-size: 16px;
         padding: 10px 20px;
+    }
+    .footer {
+        padding: 10px 0;
     }
 }
 </style>
@@ -164,9 +188,9 @@ if uploaded_file is not None:
     else:
         st.error(summary)  # Display error message
 
-# Footer with a modern touch
+# Footer with a modern, thematic design
 html("""
 <div class="footer">
-    <p>Developed with 💙 by Your Name</p>
+    <p>Developed with 💙 by <a href="https://yourwebsite.com" target="_blank">Your Name</a></p>
 </div>
 """)
