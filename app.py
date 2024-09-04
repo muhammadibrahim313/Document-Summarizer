@@ -75,9 +75,10 @@ def analyze_text(text):
 custom_css = """
 <style>
 .stApp {
-    background-image: url('https://i.pinimg.com/564x/55/4e/b8/554eb857da2b9626cf8556c6c8746f01.jpg');
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0QJce7Y5aqHz8Se2WjlBnqClnluoKHZ9jCg&s');
     background-size: cover;
-    background-position: center;
+    background-position: center center;
+    background-attachment: fixed;
     background-repeat: no-repeat;
 }
 
@@ -248,11 +249,6 @@ if uploaded_file is not None:
             st.audio(audio_file_path)
         else:
             st.error(summary)  # Display error message
-
-    # Analyze the content of the file (regardless of type)
-    analysis = analyze_text(summary if summary else transcription)
-    st.subheader("🧠 Text Analysis")
-    st.markdown(f"<div class='gradient-bg'>{analysis}</div>", unsafe_allow_html=True)
 
 # Footer with links
 st.markdown("""
