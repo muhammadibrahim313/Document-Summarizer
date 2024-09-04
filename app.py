@@ -71,18 +71,19 @@ def analyze_text(text):
     except Exception as e:
         return f"Error analyzing text: {e}"
 
-# Enhanced CSS for both dark and light modes with modern design
+# Enhanced CSS with background image and modern design
 custom_css = """
 <style>
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--background);
     color: var(--text-color);
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0QJce7Y5aqHz8Se2WjlBnqClnluoKHZ9jCg&s') no-repeat center center fixed;
+    background-size: cover;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 :root {
-    --background: #f5f5f5;
+    --background: rgba(255, 255, 255, 0.8);
     --text-color: #333;
     --primary-color: #6200ea;
     --secondary-color: #03dac6;
@@ -93,7 +94,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background: #121212;
+        --background: rgba(18, 18, 18, 0.8);
         --text-color: #e0e0e0;
         --primary-color: #bb86fc;
         --secondary-color: #03dac6;
@@ -223,7 +224,7 @@ st.title("✨ Document & Audio Processor UI ✨")
 st.markdown("#### Powered by AI | [GitHub](https://github.com/your-username) | [LinkedIn](https://www.linkedin.com/in/your-linkedin)")
 
 # File uploader with enhanced styling
-uploaded_file = st.file_uploader("Upload a Word, PDF Document or Audio File", type=['pdf', 'docx', 'mp3', 'wav'], help="Supports .pdf, .docx, .mp3, and .wav files")
+uploaded_file = st.file_uploader("Upload a Word, PDF Document, or Audio File", type=['pdf', 'docx', 'mp3', 'wav'], help="Supports .pdf, .docx, .mp3, and .wav files")
 
 if uploaded_file is not None:
     if uploaded_file.name.endswith(('.mp3', '.wav')):
@@ -249,8 +250,9 @@ if uploaded_file is not None:
     st.subheader("🧠 Text Analysis")
     st.markdown(f"<div class='gradient-bg'>{analysis}</div>", unsafe_allow_html=True)
 
-# Footer with GitHub and LinkedIn links
-html("""
+# Footer with links
+st.markdown("""
 <div class="footer">
-    <p>Developed with 💙 by <a href="https://github.com/your-username" target="_blank">Your Name</a> | 
-    <a href="https://www.linkedin.com/in/
+    <p>Created with ❤️ by [Your Name](https://www.your-website.com)</p>
+</div>
+""", unsafe_allow_html=True)
