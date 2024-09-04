@@ -49,6 +49,28 @@ def summarize_document(file):
 
     return summary, audio_file.name
 
+def transcribe_audio(file):
+    # Transcribe audio using Whisper model
+    try:
+        result = model.transcribe(file.name)
+        return result["text"]
+    except Exception as e:
+        return f"Error transcribing audio: {e}"
+
+def analyze_text(text):
+    # Analyze text content using Groq model (could be sentiment analysis, keyword extraction, etc.)
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {"role": "user", "content": f"Please analyze the following text: {text}"}
+            ],
+            model="llama3-8b-8192",
+        )
+        analysis = chat_completion.choices[0].message.content
+        return analysis
+    except Exception as e:
+        return f"Error analyzing text: {e}"
+
 # Enhanced CSS for both dark and light modes with modern design
 custom_css = """
 <style>
@@ -196,28 +218,39 @@ h1, h2, h3 {
 # Inject custom CSS into Streamlit app
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Header with title
-st.title("✨ Document Summarizer UI ✨")
-st.subheader("Upload a Word or PDF document and get an AI-generated summary with audio playback.")
+# Header with title and links
+st.title("✨ Document & Audio Processor UI ✨")
+st.markdown("#### Powered by AI | [GitHub](https://github.com/your-username) | [LinkedIn](https://www.linkedin.com/in/your-linkedin)")
 
 # File uploader with enhanced styling
-uploaded_file = st.file_uploader("Upload a Word or PDF Document", type=['pdf', 'docx'], help="Supports .pdf and .docx files")
+uploaded_file = st.file_uploader("Upload a Word, PDF Document or Audio File", type=['pdf', 'docx', 'mp3', 'wav'], help="Supports .pdf, .docx, .mp3, and .wav files")
 
 if uploaded_file is not None:
-    summary, audio_file_path = summarize_document(uploaded_file)
-    
-    if summary and audio_file_path:
-        st.subheader("🔍 Summary")
-        st.markdown(f"<div class='gradient-bg'>{summary}</div>", unsafe_allow_html=True)
-        
-        st.subheader("🎧 Audio Summary")
-        st.audio(audio_file_path)
+    if uploaded_file.name.endswith(('.mp3', '.wav')):
+        # Transcribe audio if an audio file is uploaded
+        transcription = transcribe_audio(uploaded_file)
+        st.subheader("🔊 Transcription")
+        st.markdown(f"<div class='gradient-bg'>{transcription}</div>", unsafe_allow_html=True)
     else:
-        st.error(summary)  # Display error message
+        # Summarize document if a PDF or DOCX file is uploaded
+        summary, audio_file_path = summarize_document(uploaded_file)
+        
+        if summary and audio_file_path:
+            st.subheader("🔍 Summary")
+            st.markdown(f"<div class='gradient-bg'>{summary}</div>", unsafe_allow_html=True)
+            
+            st.subheader("🎧 Audio Summary")
+            st.audio(audio_file_path)
+        else:
+            st.error(summary)  # Display error message
 
-# Footer with a modern, thematic design
+    # Analyze the content of the file (regardless of type)
+    analysis = analyze_text(summary if summary else transcription)
+    st.subheader("🧠 Text Analysis")
+    st.markdown(f"<div class='gradient-bg'>{analysis}</div>", unsafe_allow_html=True)
+
+# Footer with GitHub and LinkedIn links
 html("""
 <div class="footer">
-    <p>Developed with 💙 by <a href="https://yourwebsite.com" target="_blank">Your Name</a></p>
-</div>
-""")
+    <p>Developed with 💙 by <a href="https://github.com/your-username" target="_blank">Your Name</a> | 
+    <a href="https://www.linkedin.com/in/
