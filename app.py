@@ -58,7 +58,7 @@ def transcribe_audio(file):
         return f"Error transcribing audio: {e}"
 
 def analyze_text(text):
-    # Analyze text content using Groq model (could be sentiment analysis, keyword extraction, etc.)
+    # Analyze text content using Groq model
     try:
         chat_completion = client.chat.completions.create(
             messages=[
@@ -220,8 +220,8 @@ h1, h2, h3 {
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Header with title and links
-st.title("✨ Document & Audio Processor UI ✨")
-st.markdown("#### Powered by AI | [GitHub](https://github.com/your-username) | [LinkedIn](https://www.linkedin.com/in/your-linkedin)")
+st.title("✨ Document Summarizer & Audio Generator ✨")
+st.markdown("#### Powered by AI | [GitHub](https://github.com/muhammadibrahim313) | [LinkedIn](https://www.linkedin.com/in/muhammad-ibrahim-qasmi-9876a1297/)")
 
 # File uploader with enhanced styling
 uploaded_file = st.file_uploader("Upload a Word, PDF Document, or Audio File", type=['pdf', 'docx', 'mp3', 'wav'], help="Supports .pdf, .docx, .mp3, and .wav files")
@@ -245,14 +245,18 @@ if uploaded_file is not None:
         else:
             st.error(summary)  # Display error message
 
-    # Analyze the content of the file (regardless of type)
-    analysis = analyze_text(summary if summary else transcription)
-    st.subheader("🧠 Text Analysis")
-    st.markdown(f"<div class='gradient-bg'>{analysis}</div>", unsafe_allow_html=True)
+    # Analyze text input
+    st.subheader("📄 Analyze Text")
+    input_text = st.text_area("Enter text for analysis", height=150)
+    if st.button("Analyze Text"):
+        if input_text:
+            analysis_result = analyze_text(input_text)
+            st.markdown(f"<div class='gradient-bg'>{analysis_result}</div>", unsafe_allow_html=True)
 
-# Footer with links
+# Footer section
 st.markdown("""
 <div class="footer">
-    <p>Created with ❤️ by [Your Name](https://www.your-website.com)</p>
+    <p>&copy; 2024 Document Summarizer | All Rights Reserved</p>
+    <p>Connect with us: <a href="https://github.com/muhammadibrahim313" target="_blank">GitHub</a> | <a href="https://www.linkedin.com/in/muhammad-ibrahim-qasmi-9876a1297/" target="_blank">LinkedIn</a></p>
 </div>
 """, unsafe_allow_html=True)
