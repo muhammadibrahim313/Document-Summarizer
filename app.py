@@ -74,22 +74,16 @@ def analyze_text(text):
 # Enhanced CSS with background image and modern design
 custom_css = """
 <style>
-.stApp {
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0QJce7Y5aqHz8Se2WjlBnqClnluoKHZ9jCg&s');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-}
-
 body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-color);
-    background: rgba(255, 255, 255, 0.8);
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0QJce7Y5aqHz8Se2WjlBnqClnluoKHZ9jCg&s') no-repeat center center fixed;
+    background-size: cover;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 :root {
+    --background: rgba(255, 255, 255, 0.8);
     --text-color: #333;
     --primary-color: #6200ea;
     --secondary-color: #03dac6;
@@ -100,6 +94,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
     :root {
+        --background: rgba(18, 18, 18, 0.8);
         --text-color: #e0e0e0;
         --primary-color: #bb86fc;
         --secondary-color: #03dac6;
@@ -250,9 +245,14 @@ if uploaded_file is not None:
         else:
             st.error(summary)  # Display error message
 
+    # Analyze the content of the file (regardless of type)
+    analysis = analyze_text(summary if summary else transcription)
+    st.subheader("🧠 Text Analysis")
+    st.markdown(f"<div class='gradient-bg'>{analysis}</div>", unsafe_allow_html=True)
+
 # Footer with links
 st.markdown("""
 <div class="footer">
-    <p>Created with ❤️ by [Your Name](https://www.your-website.com) | [GitHub](https://github.com/your-username) | [LinkedIn](https://www.linkedin.com/in/your-linkedin)</p>
+    <p>Created with ❤️ by [Your Name](https://www.your-website.com)</p>
 </div>
 """, unsafe_allow_html=True)
